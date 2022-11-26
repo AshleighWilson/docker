@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+  proxy:
+    build: ./proxy
+    container_name: nginx-proxy
+    image: nginxproxy/nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./certs:/etc/nginx/certs
+networks:
+  default:
+    external:
+      name: nginx-proxy

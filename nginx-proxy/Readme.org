@@ -1,0 +1,11 @@
+#+title: NGINX Reverse Proxy
+#+author: Ashleigh Wilson
+
+* Running the container
+  NOTE: docker-compose build before docker-compose up
+
+* Updating SSL certificates
+  cp ~/.acme.sh/nc.innofox.com/fullchain.cer ~/docker/nginx-proxy/certs/nc.innofox.com.crt
+  cp ~/.acme.sh/nc.innofox.com/nc.innofox.com.key ~/docker/nginx-proxy/certs/
+  cd ~/docker/nginx-proxy/
+  sudo docker-compose restart
