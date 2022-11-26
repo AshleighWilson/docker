@@ -1,0 +1,6 @@
+nextcloud/app/apps
+nextcloud/app/config
+nextcloud/app/main
+nextcloud/certs
+nextcloud/creds
+nextcloud/db
