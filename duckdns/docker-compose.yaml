@@ -1,0 +1,25 @@
+---
+version: "3"
+services:
+  duckdns:
+    image: lscr.io/linuxserver/duckdns:latest
+    container_name: duckdns
+    environment:
+      - PUID=1000 #optional
+      - PGID=1000 #optional
+      - TZ=Europe/London
+      - FILE__SUBDOMAINS=/run/secrets/subdomains
+      - FILE__TOKEN=/run/secrets/token
+      - LOG_FILE=true #optional
+    secrets:
+      - subdomains
+      - token
+    volumes:
+      - ./config:/config #optional
+    restart: unless-stopped
+
+secrets:
+  subdomains:
+    file: secrets/subdomains.txt
+  token:
+    file: secrets/token.txt
