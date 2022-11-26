@@ -1,0 +1,82 @@
+version: '2'
+
+volumes:
+  db:
+
+services:
+  db:
+    container_name: nextcloud_db
+    image: mariadb
+    restart: always
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    volumes:
+      - ./db/:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mysql_root_password
+      - MYSQL_PASSWORD_FILE=/run/secrets/mysql_password
+      - MYSQL_DATABASE_FILE=/run/secrets/mysql_database
+      - MYSQL_USER_FILE=/run/secrets/mysql_user
+    secrets:
+      - mysql_root_password
+      - mysql_password
+      - mysql_database
+      - mysql_user
+
+  app:
+    container_name: nextcloud
+    image: nextcloud
+    restart: always
+    links:
+      - db
+    volumes:
+      - ./app/main:/var/www/html
+      - ./app/apps:/var/www/html/custom_apps
+      - ./app/config:/var/www/html/config
+      - /mnt/data/NextCloud/:/var/www/html/data
+    environment:
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mysql_root_password
+      - MYSQL_PASSWORD_FILE=/run/secrets/mysql_password
+      - MYSQL_DATABASE_FILE=/run/secrets/mysql_database
+      - MYSQL_USER_FILE=/run/secrets/mysql_user
+      - MYSQL_HOST=db
+      - VIRTUAL_HOST=nc.innofox.com
+      - OVERWRITEPROTOCOL=https
+      - PHP_MEMORY_LIMIT=5G
+      - PHP_UPLOAD_LIMIT=15G
+      - REDIS_HOST=redis
+    secrets:
+      - mysql_password
+      - mysql_database
+      - mysql_user
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:alpine
+    restart: always
+
+  cron:
+    image: nextcloud
+    restart: always
+    volumes:
+      - ./app/main:/var/www/html
+      - ./app/apps:/var/www/html/custom_apps
+      - ./app/config:/var/www/html/config
+      - /mnt/data/NextCloud/:/var/www/html/data
+    entrypoint: /cron.sh
+    depends_on:
+      - redis
+
+secrets:
+  mysql_root_password:
+    file: ./creds/mysql_root_password.txt
+  mysql_password:
+    file: ./creds/mysql_password.txt
+  mysql_user:
+    file: ./creds/mysql_user.txt
+  mysql_database:
+    file: ./creds/mysql_database.txt
+networks:
+  default:
+    external:
+      name: nginx-proxy
