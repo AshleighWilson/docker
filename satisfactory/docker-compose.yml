@@ -1,0 +1,30 @@
+version: '3'
+services:
+  satisfactory-server:
+    container_name: 'satisfactory-server'
+    hostname: 'satisfactory-server'
+    image: 'wolveix/satisfactory-server:latest'
+    ports:
+      - '7777:7777/udp'
+      - '15000:15000/udp'
+      - '15777:15777/udp'
+    volumes:
+      - './config:/config'
+    environment:
+      - AUTOPAUSE=false
+      - AUTOSAVEINTERVAL=300
+      - AUTOSAVENUM=3
+      - AUTOSAVEONDISCONNECT=true
+      - CRASHREPORT=true
+      - DEBUG=false
+      - DISABLESEASONALEVENTS=true
+      - MAXPLAYERS=4
+      - PGID=1002
+      - PUID=1002
+      - SERVERBEACONPORT=15000
+      - SERVERGAMEPORT=7777
+      - SERVERIP=0.0.0.0
+      - SERVERQUERYPORT=15777
+      - SKIPUPDATE=false
+      - STEAMBETA=true
+    restart: unless-stopped
