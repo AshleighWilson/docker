@@ -1,0 +1,23 @@
+---
+version: "2.1"
+services:
+  readarr:
+    image: lscr.io/linuxserver/readarr:develop
+    container_name: readarr
+    hostname: readarr.lan
+    environment:
+      - PUID=1002
+      - PGID=1002
+      - TZ=Europe/London
+      - VIRTUAL_HOST=readarr.lan
+      - VIRTUAL_PORT=8787
+    volumes:
+      - ./config/:/config
+      - /mnt/data/Media/Books/:/books
+      - /mnt/data/Downloads/complete/:/downloads #optional
+    restart: unless-stopped
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
