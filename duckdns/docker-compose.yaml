@@ -18,6 +18,8 @@ services:
       - ./config:/config #optional
     restart: unless-stopped
 
+# Ensure secrets file don't have newline character or null terminator.
+# Use printf "text" > file.txt
 secrets:
   subdomains:
     file: secrets/subdomains.txt
