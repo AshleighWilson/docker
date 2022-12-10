@@ -1,0 +1,26 @@
+---
+version: "2.1"
+services:
+  lidarr:
+    image: linuxserver/lidarr
+    container_name: lidarr
+    environment:
+      - PUID=1002
+      - PGID=1002
+      - TZ=Europe/London
+      - UMASK_SET=022 #optional
+    volumes:
+      - /home/data/lidarr/config/:/config
+      - /mnt/data/Media/Music/:/music
+      - /mnt/data/Downloads/complete/:/downloads
+    ports:
+      - 8686:8686
+    restart: unless-stopped
+    networks:
+        macvlan0:
+            ipv4_address: 192.168.1.86
+
+networks:
+    macvlan0:
+        external: true
+
