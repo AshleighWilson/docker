@@ -40,6 +40,7 @@ services:
       - MYSQL_USER_FILE=/run/secrets/mysql_user
       - MYSQL_HOST=db
       - VIRTUAL_HOST=nc.innofox.com
+      - VIRTUAL_PATH=/
       - OVERWRITEPROTOCOL=https
       - PHP_MEMORY_LIMIT=5G
       - PHP_UPLOAD_LIMIT=15G
