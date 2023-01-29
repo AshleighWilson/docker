@@ -3,6 +3,7 @@
 
 * Running the container
   NOTE: docker-compose build before docker-compose up
+  NOTE: May need to rename a file before upload size error clears.
 
 * Updating SSL certificates
   cp ~/.acme.sh/nc.innofox.com/fullchain.cer ~/docker/nginx-proxy/certs/nc.innofox.com.crt
