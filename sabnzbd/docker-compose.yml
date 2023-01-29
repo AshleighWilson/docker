@@ -4,12 +4,13 @@ services:
   sabnzbd:
     image: linuxserver/sabnzbd
     container_name: sabnzbd
-    hostname: sabnzbd.lan
+    # hostname: sabnzbd.lan
     environment:
       - PUID=1002
       - PGID=1002
       - TZ=Europe/London
-      - VIRTUAL_HOST=sabnzbd.lan
+      - VIRTUAL_HOST=nc.innofox.com
+      - VIRTUAL_PATH=/sabnzbd/
       - VIRTUAL_PORT=8080
     volumes:
       - ./config/:/config
