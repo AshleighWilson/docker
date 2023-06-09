@@ -1,10 +1,12 @@
-version: '2'
+version: '3.8'
 
 services:
   proxy:
     build: ./proxy
     container_name: nginx-proxy
     image: nginxproxy/nginx-proxy
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
     restart: always
     ports:
       - "80:80"
