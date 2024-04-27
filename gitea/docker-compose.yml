@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  gitea:
+    image: gitea/gitea
+    container_name: gitea
+    expose:
+      - "3000"
+    environment:
+      - USER_UID=1002
+      - USER_GID=1002
+      - VIRTUAL_HOST=nc.innofox.com
+      - VIRTUAL_PATH=/gitea/
+      - VIRTUAL_DEST=/
+      - VIRTUAL_PORT=3000
+    restart: always
+    volumes:
+      - ./data/:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+    #   - "3000:3000"
+      - "222:22"
+
+    # ports:
+    #   - 22:22
+    #   - 80:80
+    #   - 443:443
+networks:
+  default:
+    external:
+      name: nginx-proxy
