@@ -1,0 +1,23 @@
+---
+version: "3"
+services:
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - TZ=Europe/London
+      - WATCHTOWER_CLEANUP=true 
+      # - WATCHTOWER_LABEL_ENABLE=true 
+      - WATCHTOWER_NOTIFICATIONS=shoutrrr
+      # - WATCHTOWER_NOTIFICATION_URL=pushover://shoutrrr:${PO_TOKEN}@${PO_USERKEY}/?devices=Ashleigh_iPhone
+      - WATCHTOWER_SCHEDULE=@weekly
+      - WATCHTOWER_NO_STARTUP_MESSAGE=true
+    restart: unless-stopped
+    command: --notifications secret:/run/secrets/watchtower_notification_url
+    secrets:
+      - watchtower_notification_url
+
+secrets:
+  watchtower_notification_url:
+    file: ./notification_url
