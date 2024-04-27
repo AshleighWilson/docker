@@ -20,3 +20,8 @@ pihole/etc-dnsmasq.d
 pihole/etc-pihole
 readarr/config
 recipes/mediafiles/recipes
+watchtower/.env
+nodered/data
+jellyfin/config
+gitea/data
+influxdb/data
