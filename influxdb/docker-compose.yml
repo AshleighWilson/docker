@@ -1,0 +1,19 @@
+version: '2'
+
+volumes:
+  db:
+
+services:
+  influx:
+    container_name: influx_db
+    image: influxdb
+    restart: always
+    volumes:
+      - ./data/:/var/lib/influxdb2
+    ports:
+      - 8086:8086 
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
