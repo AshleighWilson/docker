@@ -1,0 +1,21 @@
+---
+version: "3.7"
+services:
+  node-red:
+    image: nodered/node-red:latest
+    container_name: nodered
+    environment:
+      - TZ=Europe/London
+      - PUID=1002
+      - PGID=1002
+      - VIRTUAL_HOST=nc.innofox.com
+      - VIRTUAL_PATH=/nodered/
+      - VIRTUAL_PORT=1880
+    volumes:
+      - ./data/:/data
+    restart: unless-stopped
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
